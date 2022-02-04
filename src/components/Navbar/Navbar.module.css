@@ -1,0 +1,9 @@
+.navbar {
+    background-color: #d0d3d2;
+    grid-area: nav;
+    border-radius: 10px;
+}
+
+.navbar__item.active{
+    color: red;
+}
