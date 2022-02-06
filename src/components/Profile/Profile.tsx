@@ -1,19 +1,20 @@
 import s from "./Profile.module.css";
 import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {ProfilePageTypeProps} from "../../redux/state";
 
-function Profile() {
+function Profile(props: ProfilePageTypeProps) {
+
     return (
         <div className={s.profile}>
-            <div className={s.profile__photo}>
-                <img className={s.profile__img} src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt=""/>
-            </div>
-            
-            <div>
-                ava+desrc
-            </div>
-
-            <MyPosts/>
+            <ProfileInfo/>
+            <MyPosts
+                posts={props.posts}
+                // posts={props.profilePage.posts}
+                // newPostText={props.profilePage.newPostText}
+                // dispatch={props.dispatch}
+            />
         </div>
     )
 }

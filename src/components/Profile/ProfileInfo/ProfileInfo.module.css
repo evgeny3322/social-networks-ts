@@ -1,2 +1,13 @@
+.profileinfo__img {
+    width: 100px;
+    height: 100px;
+}
+
+.profileinfo__photo {
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
 
 

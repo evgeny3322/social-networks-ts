@@ -6,58 +6,38 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
-// Установи react-router-app
-function App() {
+function App(props: any) {
+
     return (
-        <div className={s.app}>
-            <Header/>
-            <Navbar/>
-            <div className={s.app__content}>
-                <Routes>
-                    <Route path="/dialogs/*"
-                           element={
-                               <Dialogs
-                                   // messages={props.state.dialogsPage.messages}
-                                   // dialogs={props.state.dialogsPage.dialogs}
-                               />
-                           }
-                    />
-                    <Route path="/profile" element={
-                        <Profile
-                            // profilePage={props.state.profilePage}
-                            // dispatch={props.dispatch}
-                        />}
-                    />
-                </Routes>
+        <BrowserRouter>
+            <div className={s.app}>
+                <Header/>
+                <Navbar
+                    sidebar={props.state.sidebar}
+                />
+                <div className={s.app__content}>
+                    <Routes>
+                        <Route path="/dialogs/*"
+                               element={
+                                   <Dialogs
+                                       dialogs={props.state.dialogsPage.dialogs}
+                                       messages={props.state.dialogsPage.messages}
+                                   />
+                               }
+                        />
+                        <Route path="/profile"
+                               element={
+                                   <Profile
+                                       posts={props.state.profilePage.posts}
+                                       // dispatch={props.dispatch}
+                                   />}
+                        />
+                    </Routes>
+                </div>
             </div>
-        </div>
+        </BrowserRouter>
     );
 }
 
 export default App;
 
-
-// <BrowserRouter>
-//     <div className='app-wrapper'>
-//         <Header/>
-//         <Navbar/>
-//         <div className='app-wrapper__content'>
-//             <Routes>
-//                 <Route path="/dialogs/*"
-//                        element={
-//                            <Dialogs
-//                                messages={props.state.dialogsPage.messages}
-//                                dialogs={props.state.dialogsPage.dialogs}
-//                            />
-//                        }
-//                 />
-//                 <Route path="/profile" element={
-//                     <Profile
-//                         profilePage={props.state.profilePage}
-//                         dispatch={props.dispatch}
-//                     />}
-//                 />
-//             </Routes>
-//         </div>
-//     </div>
-// </BrowserRouter>

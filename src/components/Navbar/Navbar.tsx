@@ -1,61 +1,45 @@
 import s from "./Navbar.module.css";
 import React from "react";
 import {NavLink} from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
+import {SidebarTypeProps} from "../../redux/state";
+
+type NavBarProps = {
+    sidebar: SidebarTypeProps
+}
 
 
-function Navbar() {
-    return <nav className={s.navbar}>
-        {/*<div className={`${s.item} ${s.active}`}>*/}
-        {/*    <NavLink to="/profile">*/}
-        {/*        Profile*/}
-        {/*    </NavLink>*/}
-        {/*</div>*/}
-        {/*<div className={`${s.item} ${s.active}`}>*/}
-        {/*    <NavLink className={navData => navData.isActive ? s.activeLink:s.item} to="/dialogs">*/}
-        {/*        Messages*/}
-        {/*    </NavLink>*/}
-        {/*</div>*/}
-        {/*<div className={`${s.item} ${s.active}`}>*/}
-        {/*    <a className={s.val}>*/}
-        {/*        News*/}
-        {/*    </a>*/}
-        {/*</div>*/}
-        {/*<div className={`${s.item} ${s.active}`}>*/}
-        {/*    <a className={s.val}>*/}
-        {/*        Music*/}
-        {/*    </a>*/}
-        {/*</div>*/}
-        {/*<div className={`${s.item} ${s.active}`}>*/}
-        {/*    <a className={s.val}>*/}
-        {/*        Settings*/}
-        {/*    </a>*/}
-        {/*</div>*/}
-        <div className={`${s.navbar__item} ${s.active}`}>
-                <NavLink to="/profile">
+function Navbar(props:NavBarProps) {
+    return (
+        <nav className={s.nav}>
+            <div className={`${s.item} ${s.active}`}>
+                <NavLink className={navData => navData.isActive ? s.activeLink : s.item} to="/profile">
                     Profile
                 </NavLink>
-        </div>
-        <div className={`${s.navbar__item} ${s.active}`}>
-            <a className={s.navbar__link}>
-                Messages
-            </a>
-        </div>
-        <div className={`${s.navbar__item} ${s.active}`}>
-            <a className={s.navbar__link}>
-                News
-            </a>
-        </div>
-        <div className={`${s.navbar__item} ${s.active}`}>
-            <a className={s.navbar__link}>
-                Music
-            </a>
-        </div>
-        <div className={`${s.navbar__item} ${s.active}`}>
-            <a className={s.navbar__link}>
-                Settings
-            </a>
-        </div>
-    </nav>
+            </div>
+            <div className={`${s.item} ${s.active}`}>
+                <NavLink className={navData => navData.isActive ? s.activeLink : s.item} to="/dialogs">
+                    Messages
+                </NavLink>
+            </div>
+            <div className={`${s.item} ${s.active}`}>
+                <a className={s.item__link}>
+                    News
+                </a>
+            </div>
+            <div className={`${s.item} ${s.active}`}>
+                <a className={s.item__link}>
+                    Music
+                </a>
+            </div>
+            <div className={`${s.item} ${s.active}`}>
+                <a className={s.item__link}>
+                    Settings
+                </a>
+            </div>
+            <Sidebar sidebar={props.sidebar}/>
+        </nav>
+    )
 }
 
 export default Navbar

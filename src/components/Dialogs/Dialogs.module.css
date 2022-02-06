@@ -1,3 +1,8 @@
-.dialogs{
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    text-align: center;
     background-color: #d0d3d2;
+    border-radius: 10px;
 }
+

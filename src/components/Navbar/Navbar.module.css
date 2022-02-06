@@ -1,9 +1,28 @@
-.navbar {
-    background-color: #d0d3d2;
+.nav {
     grid-area: nav;
+    background-color: #d0d3d2;
+    text-align: center;
     border-radius: 10px;
 }
 
-.navbar__item.active{
-    color: red;
+.nav a:hover {
+    color: white;
+    transition: all .5s;
 }
+
+.activeLink {
+    color: white;
+    text-decoration: none;
+}
+
+.item {
+    color: black;
+    text-decoration: none;
+}
+
+.active {
+    transition: all .50s;
+    cursor: pointer;
+}
+
+
