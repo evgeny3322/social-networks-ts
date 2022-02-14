@@ -5,9 +5,14 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {addPost, RootStateType} from "./redux/state";
 
-function App(props: any) {
+type AppPropsType = {
+    state: RootStateType
+    addPost: (postMessage: string) => void
+}
 
+function App(props: AppPropsType) {
     return (
         <BrowserRouter>
             <div className={s.app}>
@@ -29,6 +34,7 @@ function App(props: any) {
                                element={
                                    <Profile
                                        posts={props.state.profilePage.posts}
+                                       addPost={props.addPost}
                                        // dispatch={props.dispatch}
                                    />}
                         />

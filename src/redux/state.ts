@@ -16,6 +16,7 @@ export type DialogItemPropsType = {
 
 export type ProfilePageTypeProps = {
     posts: Array<PostsTypeProps>
+
 }
 
 export type DialogsPadeTypeProps = {
@@ -24,22 +25,22 @@ export type DialogsPadeTypeProps = {
 }
 
 export type FriendTypeProps = {
-    id:number
+    id: number
     img: string
-    name:string
+    name: string
 }
 
 export type SidebarTypeProps = {
     friends: Array<FriendTypeProps>
 }
 
-type RootStateType = {
+export type RootStateType = {
     profilePage: ProfilePageTypeProps
     dialogsPage: DialogsPadeTypeProps
     sidebar: SidebarTypeProps
 }
 
-let state:RootStateType = {
+let state: RootStateType = {
     profilePage: {
         posts: [
             {id: 1, message: "Hi[1]", like: 1},
@@ -66,7 +67,17 @@ let state:RootStateType = {
             {id: 3, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name3"},
         ],
     }
+}
 
+
+export const addPost = function (postMessage: string) {
+    debugger
+    let newPost = {
+        id: 2,
+        message: postMessage,
+        like: 0
+    };
+    state.profilePage.posts.push(newPost);
 }
 
 
