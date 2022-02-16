@@ -1,25 +1,26 @@
-import React, {RefObject} from 'react';
+import React, {RefObject, MouseEvent, ChangeEvent, useState, MutableRefObject} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ProfilePageTypeProps} from "../../../redux/state";
+import {addPost, ProfilePageTypeProps} from "../../../redux/state";
 import {ProfilePropsType} from "../Profile";
+import post from "./Post/Post";
 
 
 type MyPostsPropsType = ProfilePropsType
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
-    let postsElement =
-        props.posts.map((post) => <Post message={post.message} like={post.like} id={1}/>)
+    let postsElement = props.posts.map((post,i) => <Post message={post.message} like={post.like} id={i}/>)
 
-    let newPostElement: RefObject<HTMLTextAreaElement> = React.createRef();
+    let newPostElement = React.useRef<HTMLTextAreaElement | null >(null);
 
     let addPost = () => {
         let text = newPostElement.current?.value
-        if (text) (props.addPost(text))
+        if (text) {
+            (props.addPost(text))
+        }
+       if (newPostElement.current)  newPostElement.current.value = '';
     }
-    // let text = newPostElement.current!.value;
-    // props.addPost(text);
 
     return <div className={s.myposts}>
         <div>
@@ -29,10 +30,11 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
             <div className={s.myposts__addpost}>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea ref={newPostElement} />
                 </div>
 
                 <div>
+                    {/*<button onClick={newPostElement}>*/}
                     <button onClick={addPost}>
                         add post
                     </button>
