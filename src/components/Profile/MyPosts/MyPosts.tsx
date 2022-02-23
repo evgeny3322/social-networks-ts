@@ -1,26 +1,31 @@
-import React, {RefObject, MouseEvent, ChangeEvent, useState, MutableRefObject} from 'react';
+import React, {useState, MutableRefObject} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {addPost, ProfilePageTypeProps} from "../../../redux/state";
-import {ProfilePropsType} from "../Profile";
-import post from "./Post/Post";
+import {PostsTypeProps, } from "../../../redux/state";
 
 
-type MyPostsPropsType = ProfilePropsType
+type MyPostsPropsType ={
+    posts: Array<PostsTypeProps>
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
+}
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
-    let postsElement = props.posts.map((post,i) => <Post message={post.message} like={post.like} id={i}/>)
+    let postsElement = props.posts.map((post, i) => <Post message={post.message} like={post.like} id={i}/>)
 
-    let newPostElement = React.useRef<HTMLTextAreaElement | null >(null);
+    let newPostElement = React.useRef<HTMLTextAreaElement | null>(null);
 
     let addPost = () => {
-        let text = newPostElement.current?.value
-        if (text) {
-            (props.addPost(text))
-        }
-       if (newPostElement.current)  newPostElement.current.value = '';
+        props.addPost()
     }
+
+    const onPostChange = () => {
+        let text = newPostElement.current!.value
+        props.updateNewPostText(text)
+    }
+
 
     return <div className={s.myposts}>
         <div>
@@ -30,7 +35,7 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
             <div className={s.myposts__addpost}>
                 <div>
-                    <textarea ref={newPostElement} />
+                    <textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText}/>
                 </div>
 
                 <div>

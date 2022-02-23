@@ -18,7 +18,7 @@ export type DialogItemPropsType = {
 
 export type ProfilePageTypeProps = {
     posts: Array<PostsTypeProps>
-
+    newPostText:string
 }
 
 export type DialogsPadeTypeProps = {
@@ -49,6 +49,7 @@ let state: RootStateType = {
             {id: 2, message: "Hi[2]", like: 2},
             {id: 3, message: "Hi[3]", like: 3},
         ],
+        newPostText: 'it',
     },
     dialogsPage: {
         messages: [
@@ -72,13 +73,20 @@ let state: RootStateType = {
 }
 
 
-export const addPost = function (postMessage: string) {
+export const addPost = function () {
     let newPost = {
         id: 2,
-        message: postMessage,
+        message: state.profilePage.newPostText,
         like: 0
     };
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = '';
+    rerenderEntireTree(state);
+}
+
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText;
     rerenderEntireTree(state);
 }
 
