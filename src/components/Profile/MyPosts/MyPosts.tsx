@@ -1,4 +1,4 @@
-import React, {useState, MutableRefObject} from 'react';
+import React, {useState, MutableRefObject, ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {PostsTypeProps, } from "../../../redux/state";
@@ -21,9 +21,10 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
         props.addPost()
     }
 
-    const onPostChange = () => {
-        let text = newPostElement.current!.value
-        props.updateNewPostText(text)
+    const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        // let text = newPostElement.current!.value
+        // props.updateNewPostText(text)
+        props.updateNewPostText(e.currentTarget.value)
     }
 
 

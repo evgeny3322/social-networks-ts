@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = () => {
+    console.log('state')
+}
 
 export type PostsTypeProps = {
     id: number
@@ -18,7 +20,7 @@ export type DialogItemPropsType = {
 
 export type ProfilePageTypeProps = {
     posts: Array<PostsTypeProps>
-    newPostText:string
+    newPostText: string
 }
 
 export type DialogsPadeTypeProps = {
@@ -49,7 +51,7 @@ let state: RootStateType = {
             {id: 2, message: "Hi[2]", like: 2},
             {id: 3, message: "Hi[3]", like: 3},
         ],
-        newPostText: 'it',
+        newPostText: '',
     },
     dialogsPage: {
         messages: [
@@ -75,20 +77,23 @@ let state: RootStateType = {
 
 export const addPost = function () {
     let newPost = {
-        id: 2,
+        id: new Date().getTime(),
         message: state.profilePage.newPostText,
         like: 0
     };
     state.profilePage.posts.push(newPost);
     state.profilePage.newPostText = '';
-    rerenderEntireTree(state);
+    rerenderEntireTree();
 }
 
 
 export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText;
-    rerenderEntireTree(state);
+    rerenderEntireTree();
 }
 
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer;
+}
 
 export default state
