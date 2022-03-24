@@ -1,14 +1,15 @@
-import React, {useState, MutableRefObject, ChangeEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostsTypeProps, } from "../../../redux/state";
+import {ActionsTypes, addPostAC, PostsTypeProps,} from "../../../redux/state";
 
 
-type MyPostsPropsType ={
+type MyPostsPropsType = {
     posts: Array<PostsTypeProps>
     addPost: () => void
     newPostText: string
     updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -17,11 +18,14 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     let newPostElement = React.useRef<HTMLTextAreaElement | null>(null);
 
+    // let addPost = () => {
+    //     props.addPost()
+    // }
     let addPost = () => {
-        props.addPost()
+        props.dispatch(addPostAC(props.newPostText))
     }
 
-    const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         // let text = newPostElement.current!.value
         // props.updateNewPostText(text)
         props.updateNewPostText(e.currentTarget.value)

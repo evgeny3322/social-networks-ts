@@ -1,7 +1,3 @@
-let rerenderEntireTree = () => {
-    console.log('state')
-}
-
 export type PostsTypeProps = {
     id: number
     message: string
@@ -44,56 +40,100 @@ export type RootStateType = {
     sidebar: SidebarTypeProps
 }
 
-let state: RootStateType = {
-    profilePage: {
-        posts: [
-            {id: 1, message: "Hi[1]", like: 1},
-            {id: 2, message: "Hi[2]", like: 2},
-            {id: 3, message: "Hi[3]", like: 3},
-        ],
-        newPostText: '',
+export type StoreType = {
+    _state: RootStateType
+    updateNewPostText: (newText: string) => void
+    addPost: () => void
+    _onChange: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => RootStateType
+    dispatch: (action: ActionsTypes) => void
+}
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
+
+export const addPostAC = (postText: string) => {
+    return {
+        type: "ADD-POST",
+        postText: postText
+    } as const
+}
+
+export const changeNewTextAC = (newText: string) => {
+    return {
+        type: "CHANGE-NEW-TEXT",
+        newText: newText
+    } as const
+}
+
+
+const store: StoreType = {
+    _state: {
+        profilePage: {
+            posts: [
+                {id: 1, message: "Hi[1]", like: 1},
+                {id: 2, message: "Hi[2]", like: 2},
+                {id: 3, message: "Hi[3]", like: 3},
+            ],
+            newPostText: '',
+        },
+        dialogsPage: {
+            messages: [
+                {id: 1, message: "Hi PersonOne"},
+                {id: 2, message: "Hi PersonTwo"},
+                {id: 3, message: "Hi PersonThree"},
+            ],
+            dialogs: [
+                {id: 1, name: "PersonTwo"},
+                {id: 2, name: "PersonTwo"},
+                {id: 3, name: "PersonTwo"},
+            ],
+        },
+        sidebar: {
+            friends: [
+                {id: 1, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name1"},
+                {id: 2, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name2"},
+                {id: 3, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name3"},
+            ],
+        }
     },
-    dialogsPage: {
-        messages: [
-            {id: 1, message: "Hi PersonOne"},
-            {id: 2, message: "Hi PersonTwo"},
-            {id: 3, message: "Hi PersonThree"},
-        ],
-        dialogs: [
-            {id: 1, name: "PersonTwo"},
-            {id: 2, name: "PersonTwo"},
-            {id: 3, name: "PersonTwo"},
-        ],
+    updateNewPostText(newText: string) {
+        this._state.profilePage.newPostText = newText;
+        this._onChange();
     },
-    sidebar: {
-        friends: [
-            {id: 1, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name1"},
-            {id: 2, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name2"},
-            {id: 3, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name3"},
-        ],
+    addPost() {
+        let newPost: PostsTypeProps = {
+            id: new Date().getTime(),
+            message: this._state.profilePage.newPostText,
+            like: 0
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = '';
+        this._onChange();
+    },
+    _onChange() {
+        console.log('state')
+    },
+    subscribe(callback) {
+        this._onChange = callback;
+    },
+    getState() {
+        return this._state
+    },
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            let newPost: PostsTypeProps = {
+                id: new Date().getTime(),
+                message: this._state.profilePage.newPostText,
+                like: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._onChange();
+        } else if (action.type === "CHANGE-NEW-TEXT") {
+            this._state.profilePage.newPostText = action.newText;
+            this._onChange();
+        }
     }
 }
 
-
-export const addPost = function () {
-    let newPost = {
-        id: new Date().getTime(),
-        message: state.profilePage.newPostText,
-        like: 0
-    };
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = '';
-    rerenderEntireTree();
-}
-
-
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText;
-    rerenderEntireTree();
-}
-
-export const subscribe = (observer: any) => {
-    rerenderEntireTree = observer;
-}
-
-export default state
+export default store
