@@ -1,3 +1,5 @@
+import {ProfileReducer} from "./profile-reducer";
+
 export type PostsTypeProps = {
     id: number
     message: string
@@ -24,6 +26,13 @@ export type DialogsPadeTypeProps = {
     messages: Array<MessagesTypeProps>
 }
 
+
+export type DialogsType = {
+    dialogs: Array<DialogItemPropsType>
+    messages: Array<MessagesTypeProps>
+    newMessageBody: string
+}
+
 export type FriendTypeProps = {
     id: number
     img: string
@@ -38,6 +47,7 @@ export type RootStateType = {
     profilePage: ProfilePageTypeProps
     dialogsPage: DialogsPadeTypeProps
     sidebar: SidebarTypeProps
+    newMessageBody: string
 }
 
 export type StoreType = {
@@ -49,7 +59,12 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
+
+export type ActionsTypes =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof changeNewTextAC>
+    | ReturnType<typeof messageNewTextAC>
+    | ReturnType<typeof sendMessageAC>
 
 export const addPostAC = (postText: string) => {
     return {
@@ -58,15 +73,27 @@ export const addPostAC = (postText: string) => {
     } as const
 }
 
-export const changeNewTextAC = (newText: string) => {
+export const changeNewTextAC = (text: string) => {
     return {
-        type: "CHANGE-NEW-TEXT",
-        newText: newText
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: text
     } as const
 }
 
+export const messageNewTextAC = (body: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY',
+        body
+    } as const
+}
 
-const store: StoreType = {
+export const sendMessageAC = () => {
+    return {
+        type: 'SEND-MESSAGE',
+    } as const
+}
+
+export const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -94,7 +121,8 @@ const store: StoreType = {
                 {id: 2, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name2"},
                 {id: 3, img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", name: "name3"},
             ],
-        }
+        },
+        newMessageBody: ""
     },
     updateNewPostText(newText: string) {
         this._state.profilePage.newPostText = newText;
@@ -111,7 +139,8 @@ const store: StoreType = {
         this._onChange();
     },
     _onChange() {
-        console.log('state')
+        // console.log('state')
+        return this._state
     },
     subscribe(callback) {
         this._onChange = callback;
@@ -120,19 +149,30 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            let newPost: PostsTypeProps = {
-                id: new Date().getTime(),
-                message: this._state.profilePage.newPostText,
-                like: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._onChange();
-        } else if (action.type === "CHANGE-NEW-TEXT") {
-            this._state.profilePage.newPostText = action.newText;
-            this._onChange();
-        }
+        this._state.profilePage = ProfileReducer(this._state.profilePage, action)
+        // this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
+
+        // if (action.type === "ADD-POST") {
+        //     let newPost: PostsTypeProps = {
+        //         id: new Date().getTime(),
+        //         message: this._state.profilePage.newPostText,
+        //         like: 0
+        //     };
+        //     this._state.profilePage.posts.push(newPost);
+        //     this._state.profilePage.newPostText = '';
+        //     this._onChange();
+        // } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+        //     this._state.profilePage.newPostText = action.newText;
+        //     this._onChange();
+        // } else if (action.type === "UPDATE-NEW-MESSAGE-BODY") {
+        //     this._state.newMessageBody = action.body
+        //     this._onChange();
+        // } else if (action.type === "SEND-MESSAGE") {
+        //     let body = this._state.newMessageBody
+        //     this._state.newMessageBody = "";
+        //     this._state.dialogsPage.messages.push({id: 6, message: body});
+        //     this._onChange();
+        // }
     }
 }
 

@@ -8,7 +8,7 @@ export type ProfilePropsType = {
     posts: Array<PostsTypeProps>
     newPostText:string
     updateNewPostText: (newText: string) => void
-    addPost: () => void
+    // addPost: () => void
     dispatch: (action: ActionsTypes) => void
 }
 
@@ -20,7 +20,7 @@ function Profile(props: ProfilePropsType) {
             <MyPosts
                 newPostText={props.newPostText}
                 posts={props.posts}
-                addPost={props.addPost}
+                // addPost={props.addPost}
                 updateNewPostText={props.updateNewPostText}
                 dispatch={props.dispatch}
             />
