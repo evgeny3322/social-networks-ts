@@ -1,7 +1,11 @@
 import React from 'react';
 import s from "../Sidebar.module.css";
-import {FriendTypeProps} from "../../../../redux/state";
 
+export type FriendTypeProps = {
+    id: number
+    img: string
+    name: string
+}
 
 const Friend: React.FC<FriendTypeProps> = (props) => {
     return (

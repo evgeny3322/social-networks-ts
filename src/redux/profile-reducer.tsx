@@ -1,86 +1,51 @@
-import React from 'react';
-import {ActionsTypes, PostsTypeProps} from "./state";
+import {sendMessageActionType, updateNewMessageBodyActionType} from "./dialogs-reducer";
+import {PostPropsType} from "../components/Profile/MyPosts/Post/Post";
 
-export type ProfileReducerType = {
-    posts: PostsTypeProps[]
+export type addPostActionType = {
+    type: 'ADD-POST'
+}
+
+export type updateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+
+export type ActionsTypes = addPostActionType
+    | updateNewPostTextActionType
+    | updateNewMessageBodyActionType
+    | sendMessageActionType
+
+
+type ProfileReducerState = {
+    posts: Array<PostPropsType>
     newPostText: string
 }
 
-let initialState: ProfileReducerType = {
+let initialState = {
     posts: [
-        {id: 1, message: "Hi[1]", like: 1},
-        {id: 2, message: "Hi[2]", like: 2}
-    ] as Array<PostsTypeProps>,
+        {id: 1, message: 'MessageItem1', likeCount: 1},
+        {id: 2, message: 'MessageItem2', likeCount: 2}
+    ],
     newPostText: ''
 }
 
+export const profileReducer = (state: ProfileReducerState = initialState, action: ActionsTypes) => {
 
-export const ProfileReducer = (state: ProfileReducerType = initialState, action: ActionsTypes): ProfileReducerType => {
-    switch (action.type) {
+    switch(action.type) {
         case 'ADD-POST':
-            console.log(state.newPostText)
-            let newPost: PostsTypeProps = {
-                id: new Date().getTime(),
-                message: state.newPostText,
-                like: 0
-            };
+            let newPost = {id: new Date().getTime(), message: state.newPostText, likeCount: 0};
             state.posts.push(newPost);
             state.newPostText = '';
-            return state
-        case 'UPDATE-NEW-POST-TEXT':
-            console.log(action.newText)
+            return state;
+        case "UPDATE-NEW-POST-TEXT":
             state.newPostText = action.newText;
             return state;
         default:
             return state;
     }
+}
 
+export const addPostCreator = () :addPostActionType => ({type: 'ADD-POST'})
 
-};
-
-
-//Example 1 (native example(addText before click on textarea))
-
-// switch(action.type) {
-//     case 'ADD-POST':
-//         return {...state, newPostText: '', posts: [{id: new Date().getTime(), message: state.newPostText, like: 0},...state.posts]};
-//     case "UPDATE-NEW-POST-TEXT":
-//         return {...state, newPostText: action.newText};
-//     default:
-//         return state;
-// }
-
-//Example 2 (After change function case)
-
-// if (action.type === "ADD-POST") {
-//     let newPost: PostsTypeProps = {
-//         id: new Date().getTime(),
-//         message: this._state.profilePage.newPostText,
-//         like: 0
-//     };
-//     this._state.profilePage.posts.push(newPost);
-//     this._state.profilePage.newPostText = '';
-//     this._onChange();
-// } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-//     this._state.profilePage.newPostText = action.newText;
-//     this._onChange();
-// }
-
-//Example 3 (Click addPost before addText)
-
-// switch (action.type) {
-//     case 'ADD-POST':
-//         let newPost: PostsTypeProps = {
-//             id: new Date().getTime(),
-//             message: state.newPostText,
-//             like: 0
-//         };
-//         state.posts.push(newPost);
-//         state.newPostText = '';
-//         return state
-//     case "UPDATE-NEW-POST-TEXT":
-//         state.newPostText = action.newText;
-//         return state;
-//     default:
-//         return state;
-// }
+export const updateNewPostTextCreator = (text:string) :updateNewPostTextActionType =>
+    ({type: 'UPDATE-NEW-POST-TEXT', newText: text})

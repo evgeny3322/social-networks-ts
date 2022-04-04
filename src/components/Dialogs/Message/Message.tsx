@@ -1,10 +1,15 @@
 import React from 'react';
 import s from "./Message.module.css";
-import {MessagesTypeProps} from "../../../redux/state";
 
-const Message: React.FC<MessagesTypeProps> = (props) => {
+export type MessagePropsType = {
+    message: string,
+    id: number
+}
+
+const Message: React.FC<MessagePropsType> = (props) => {
     return <div className={s.message}>
         {props.message}
     </div>
 };
 export default Message;
+

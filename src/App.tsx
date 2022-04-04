@@ -5,37 +5,32 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {DialogsType, StoreType} from "./redux/state";
+import {ReduxStoreType, store} from "./redux/redux-store";
 
 type AppPropsType = {
-    store: StoreType
+    store: ReduxStoreType
 }
 
-const App: React.FC<AppPropsType> = (props) => {
+
+const App = (props: AppPropsType) => {
+    const state = props.store.getState()
 
     return (
         <BrowserRouter>
             <div className={s.app}>
                 <Header/>
                 <Navbar
-                    sidebar={props.store._state.sidebar}
+                    // sidebar={props.store._state.sidebar}
                 />
                 <div className={s.app__content}>
                     <Routes>
-                        <Route path="/dialogs/*"
-                               element={
-                                   <Dialogs store={props.store} dispatch={props.store.dispatch.bind(props.store)} />
-                               }
+                        <Route path={'/dialogs/*'}
+                               element={<Dialogs dialogsPage={state.dialogsPage}
+                                                 dispatch={store.dispatch.bind(store)}/>}
                         />
-                        <Route path="/profile"
-                               element={
-                                   <Profile
-                                       posts={props.store._state.profilePage.posts}
-                                       // addPost={props.store.addPost.bind(props.store)}
-                                       newPostText={props.store._state.profilePage.newPostText}
-                                       updateNewPostText={props.store.updateNewPostText.bind(props.store)}
-                                       dispatch={props.store.dispatch.bind(props.store)}
-                                   />}
+                        <Route path={'/profile'}
+                               element={<Profile profilePage={state.profilePage}
+                                                 dispatch={store.dispatch.bind(store)}/>}
                         />
                     </Routes>
                 </div>

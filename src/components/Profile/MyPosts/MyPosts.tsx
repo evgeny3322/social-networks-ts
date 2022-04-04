@@ -1,33 +1,28 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
-import Post from "./Post/Post";
-import {ActionsTypes, addPostAC, changeNewTextAC, PostsTypeProps,} from "../../../redux/state";
-
+import Post, {PostPropsType} from "./Post/Post";
+import {ActionsTypes, addPostCreator, updateNewPostTextCreator} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
-    posts: Array<PostsTypeProps>
-    // addPost: () => void
+    posts: Array<PostPropsType>
     newPostText: string
-    updateNewPostText: (newText: string) => void
     dispatch: (action: ActionsTypes) => void
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+const MyPosts = (props: MyPostsPropsType) => {
+    const postElements = props.posts.map((p, index) =>
+        <Post key={index} id={p.id} message={p.message} likeCount={p.likeCount}/>);
 
-    let postsElement = props.posts.map((post, i) => <Post message={post.message} like={post.like} id={i}/>)
+    const newPostElement = React.createRef<HTMLTextAreaElement>();
 
-    let newPostElement = React.useRef<HTMLTextAreaElement | null>(null);
-
-    let addPost = () => {
-        props.dispatch(addPostAC(props.newPostText))
+    const addPost = () => {
+        props.dispatch(addPostCreator())
     }
 
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        console.log('onPostChange', e.currentTarget.value)
-        // props.dispatch(changeNewTextAC(props.newPostText))
-        props.dispatch(changeNewTextAC(e.currentTarget.value))
+    const onPostChange = () => {
+        let text = newPostElement.current!.value;
+        props.dispatch(updateNewPostTextCreator(text))
     }
-
 
     return <div className={s.myposts}>
         <div>
@@ -37,7 +32,9 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
             <div className={s.myposts__addpost}>
                 <div>
-                    <textarea onChange={onPostChange} value={props.newPostText}/>
+                    <textarea ref={newPostElement}
+                              onChange={onPostChange}
+                              value={props.newPostText}/>
                 </div>
 
                 <div>
@@ -49,11 +46,11 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             </div>
 
             <div className={s.post}>
-                {postsElement}
+                {postElements}
             </div>
 
         </div>
     </div>
 };
 
-export default MyPosts;
+export default MyPosts

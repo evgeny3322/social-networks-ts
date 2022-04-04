@@ -2,13 +2,14 @@ import s from "./Profile.module.css";
 import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes, PostsTypeProps} from "../../redux/state";
+import {ActionsTypes} from "../../redux/profile-reducer";
+import {PostPropsType} from "./MyPosts/Post/Post";
 
-export type ProfilePropsType = {
-    posts: Array<PostsTypeProps>
-    newPostText:string
-    updateNewPostText: (newText: string) => void
-    // addPost: () => void
+type ProfilePropsType = {
+    profilePage: {
+        posts: Array<PostPropsType>,
+        newPostText: string
+    },
     dispatch: (action: ActionsTypes) => void
 }
 
@@ -17,12 +18,9 @@ function Profile(props: ProfilePropsType) {
     return (
         <div className={s.profile}>
             <ProfileInfo/>
-            <MyPosts
-                newPostText={props.newPostText}
-                posts={props.posts}
-                // addPost={props.addPost}
-                updateNewPostText={props.updateNewPostText}
-                dispatch={props.dispatch}
+            <MyPosts posts={props.profilePage.posts}
+                     dispatch={props.dispatch}
+                     newPostText={props.profilePage.newPostText}
             />
         </div>
     )

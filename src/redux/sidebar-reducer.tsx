@@ -1,10 +1,12 @@
 import React from 'react';
+import {ActionsTypes} from "./profile-reducer";
 
 export type SidebarReducerType = {
 
 }
 
-const SidebarReducer = (state:SidebarReducerType) => {
+let initialState = {}
+const SidebarReducer = (state: SidebarReducerType = initialState, action: ActionsTypes) => {
     return (
         <div>
 

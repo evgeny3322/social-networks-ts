@@ -1,16 +1,15 @@
 import React from 'react';
 import s from "./Sidebar.module.css";
-import Friend from "./Friend/Friend";
-import {SidebarTypeProps} from "../../../redux/state";
+import Friend, {FriendTypeProps} from "./Friend/Friend";
 
 
 type SidebarProps = {
-    sidebar: SidebarTypeProps
+    sidebar: FriendTypeProps
 }
 
 const Sidebar = (props: SidebarProps) => {
-    let sidebarElements =
-        props.sidebar.friends.map((s) => <Friend id={s.id} img={s.img} name={s.name}/>);
+    // let sidebarElements =
+    //     props.sidebar.friends.map((s) => <Friend id={s.id} img={s.img} name={s.name}/>);
 
     return (
         <div className={s.sidebar}>
@@ -19,7 +18,7 @@ const Sidebar = (props: SidebarProps) => {
                     Friends
                 </span>
                 <div className={s.sidebar__body}>
-                    {sidebarElements}
+                    {/*{sidebarElements}*/}
                 </div>
             </div>
         </div>

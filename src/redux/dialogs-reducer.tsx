@@ -1,59 +1,57 @@
-import React from 'react';
-import {ActionsTypes, DialogItemPropsType, DialogsPadeTypeProps, MessagesTypeProps} from "./state";
+import {ActionsTypes} from "./profile-reducer";
+import {DialogItemPropsType} from "../components/Dialogs/DialogItem/DialogItem";
+import {MessagePropsType} from "../components/Dialogs/Message/Message";
 
-export type ActionsDialogsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
 
-
-export const addPostAC = (postText: string) => {
-    return {
-        type: "ADD-POST",
-        postText: postText
-    } as const
+export type updateNewMessageBodyActionType = {
+    type: 'UPDATE-NEW-MESSAGE-BODY'
+    body: string
 }
 
-export const changeNewTextAC = (newText: string) => {
-    return {
-        type: "UPDATE-NEW-POST-TEXT",
-        newText: newText
-    } as const
+export type sendMessageActionType = {
+    type: 'SEND-MESSAGE'
 }
 
-export type DialogsReducerType = {
-    dialogs: DialogItemPropsType[]
-    messages: MessagesTypeProps[]
+
+type DialogsReducerState = {
+    dialogs: Array<DialogItemPropsType>
+    messages: Array<MessagePropsType>
     newMessageBody: string
 }
 
-let initialState: DialogsReducerType = {
+let initialState = {
     messages: [
-        {id: 1, message: "Hi PersonOne"},
-        {id: 2, message: "Hi PersonTwo"},
-        {id: 3, message: "Hi PersonThree"},
-    ] as MessagesTypeProps[],
+        {id: 1, message: 'Message1'},
+        {id: 2, message: 'Message2'},
+        {id: 3, message: 'Message3'},
+    ],
     newMessageBody: '',
     dialogs: [
-        {id: 1, name: "Person1"},
-        {id: 2, name: 'Person2'},
-        {id: 3, name: 'Person3'},
-    ] as DialogItemPropsType[]
+        {id: 1, name: 'PersonOne'},
+        {id: 2, name: 'PersonTwo'},
+        {id: 3, name: 'PersonThree'},
+    ]
 }
-export const DialogsReducer = (state: DialogsReducerType = initialState, action: ActionsTypes): DialogsReducerType => {
+
+export const dialogsReducer = (state: DialogsReducerState = initialState, action: ActionsTypes) => {
 
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':
-            return {...state, newMessageBody: action.body};
+            state.newMessageBody = action.body;
+            return state;
         case 'SEND-MESSAGE':
             let body = state.newMessageBody;
-            return {
-                ...state,
-                newMessageBody: '',
-                messages: [...state.messages, {id: new Date().getTime(), message: body}]
-            };
+            state.newMessageBody = '';
+            state.messages.push({id: 6, message: body});
+            return state;
         default:
             return state;
     }
+}
 
-};
+export const updateNewMessageBodyCreator = (body: string): updateNewMessageBodyActionType =>
+    ({type: 'UPDATE-NEW-MESSAGE-BODY', body: body})
 
+export const sendMessageCreator = (): sendMessageActionType => ({type: 'SEND-MESSAGE'})
 
 

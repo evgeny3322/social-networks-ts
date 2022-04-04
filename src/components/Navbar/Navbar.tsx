@@ -2,10 +2,9 @@ import s from "./Navbar.module.css";
 import React from "react";
 import {NavLink} from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
-import {SidebarTypeProps} from "../../redux/state";
 
 type NavBarProps = {
-    sidebar: SidebarTypeProps
+    // sidebar: SidebarTypeProps
 }
 
 
@@ -37,7 +36,7 @@ function Navbar(props:NavBarProps) {
                     Settings
                 </a>
             </div>
-            <Sidebar sidebar={props.sidebar}/>
+            {/*<Sidebar sidebar={props.sidebar}/>*/}
         </nav>
     )
 }

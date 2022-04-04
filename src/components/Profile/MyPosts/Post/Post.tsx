@@ -1,10 +1,13 @@
 import React from 'react';
 import s from "./Post.module.css";
-import {PostsTypeProps} from "../../../../redux/state";
 
+export type PostPropsType = {
+    message: string,
+    likeCount: number,
+    id: number
+}
 
-
-const Post: React.FC<PostsTypeProps> = (props) => {
+const Post = (props:PostPropsType) => {
     return (
         <div className={s.post__item}>
 
@@ -17,7 +20,8 @@ const Post: React.FC<PostsTypeProps> = (props) => {
                     {props.message}
                 </div>
                 <span>
-                    like {props.like}
+                    likes
+                    {props.likeCount}
                 </span>
             </div>
         </div>
