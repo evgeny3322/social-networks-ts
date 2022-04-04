@@ -18,6 +18,7 @@ let initialState: ProfileReducerType = {
 export const ProfileReducer = (state: ProfileReducerType = initialState, action: ActionsTypes): ProfileReducerType => {
     switch (action.type) {
         case 'ADD-POST':
+            console.log(state.newPostText)
             let newPost: PostsTypeProps = {
                 id: new Date().getTime(),
                 message: state.newPostText,
@@ -27,6 +28,7 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
             state.newPostText = '';
             return state
         case 'UPDATE-NEW-POST-TEXT':
+            console.log(action.newText)
             state.newPostText = action.newText;
             return state;
         default:

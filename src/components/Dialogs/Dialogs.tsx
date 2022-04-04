@@ -2,6 +2,8 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from "./Message/Message";
+
+
 import {
     ActionsTypes,
     DialogItemPropsType,
@@ -13,24 +15,14 @@ import {
 
 
 type DialogsPropsType = {
-    // dialogsPage: {
-    //     dialogs: Array<DialogItemPropsType>
-    //     messages: Array<MessagesTypeProps>
-    //     newMessageBody: string
-    // },
-    // updateNewMessageBody: (body: string) => void
-    // sendMessageAC: () => void
     store: StoreType
     dispatch: (action: ActionsTypes) => void
-    // messageNewTextAC: (body: string) => void
-    // dialogsPage:DialogsPadeTypeProps
 }
 
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
     //Example from MyPost Component
     // let postsElement = props.posts.map((post, i) => <Post message={post.message} like={post.like} id={i}/>)
-    //
     // let newPostElement = React.useRef<HTMLTextAreaElement | null>(null);
     const state = props.store.getState()
 
