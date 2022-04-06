@@ -1,5 +1,5 @@
-import {MessagePropsType} from "../components/Dialogs/Message/Message";
-import {DialogItemPropsType} from "../components/Dialogs/DialogItem/DialogItem";
+import {MessageType} from "../components/Dialogs/Message/Message";
+import {DialogItemType} from "../components/Dialogs/DialogItem/DialogItem";
 import {ActionsTypes, profileReducer} from "./profile-reducer";
 import { dialogsReducer } from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
@@ -11,9 +11,9 @@ export type StateType = {
         newPostText: string
     },
     dialogsPage: {
-        messages: Array<MessagePropsType>
+        messages: Array<MessageType>
         newMessageBody: string
-        dialogs: Array<DialogItemPropsType>
+        dialogs: Array<DialogItemType>
     },
     sidebar: {
         // friends:Array<FriendTypeProps>

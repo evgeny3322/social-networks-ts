@@ -1,6 +1,6 @@
 import {ActionsTypes} from "./profile-reducer";
-import {DialogItemPropsType} from "../components/Dialogs/DialogItem/DialogItem";
-import {MessagePropsType} from "../components/Dialogs/Message/Message";
+import {DialogItemType} from "../components/Dialogs/DialogItem/DialogItem";
+import {MessageType} from "../components/Dialogs/Message/Message";
 
 
 export type updateNewMessageBodyActionType = {
@@ -14,36 +14,39 @@ export type sendMessageActionType = {
 
 
 export type DialogsReducerStateType = {
-    dialogs: Array<DialogItemPropsType>
-    messages: Array<MessagePropsType>
+    dialogs: Array<DialogItemType>
+    messages: Array<MessageType>
     newMessageBody: string
 }
 
 let initialState = {
     messages: [
-        {id: 1, message: 'Message1'},
-        {id: 2, message: 'Message2'},
-        {id: 3, message: 'Message3'},
-    ],
+        {id: 1, message: 'Hello!'},
+        {id: 2, message: 'How are you?'},
+        {id: 3, message: 'What is your name?'},
+        {id: 4, message: 'Come on'},
+        {id: 5, message: 'Hey, where are you from?'},
+        {id: 6, message: 'Okay'}
+    ] as Array<MessageType>,
     newMessageBody: '',
     dialogs: [
-        {id: 1, name: 'PersonOne'},
-        {id: 2, name: 'PersonTwo'},
-        {id: 3, name: 'PersonThree'},
-    ]
+        {id: 1, name: 'Valera'},
+        {id: 2, name: 'Sergey'},
+        {id: 3, name: 'Anton'},
+        {id: 4, name: 'Veronika'},
+        {id: 5, name: 'Aleksandr'},
+        {id: 6, name: 'Artem'}
+    ] as Array<DialogItemType>
 }
 
 export const dialogsReducer = (state: DialogsReducerStateType = initialState, action: ActionsTypes) => {
 
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':
-            state.newMessageBody = action.body;
-            return state;
+            return {...state, newMessageBody: action.body};
         case 'SEND-MESSAGE':
             let body = state.newMessageBody;
-            state.newMessageBody = '';
-            state.messages.push({id: 6, message: body});
-            return state;
+            return {...state, newMessageBody: '' , messages: [...state.messages, {id: new Date().getTime(), message: body}]};
         default:
             return state;
     }

@@ -4,10 +4,13 @@ import Post, {PostPropsType} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 
 
-
 const MyPosts = (props: MyPostsPropsType) => {
     const postElements = props.profilePage.posts.map((p, index) =>
-        <Post key={index} id={p.id} message={p.message} likeCount={p.likeCount}/>);
+        <Post
+            key={p.id}
+            id={p.id}
+            message={p.message}
+            likeCount={p.likeCount}/>);
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();
 
@@ -28,9 +31,11 @@ const MyPosts = (props: MyPostsPropsType) => {
 
             <div className={s.myposts__addpost}>
                 <div>
-                    <textarea ref={newPostElement}
-                              onChange={onPostChange}
-                              value={props.profilePage.newPostText}/>
+                    <textarea
+                        ref={newPostElement}
+                        onChange={onPostChange}
+                        value={props.profilePage.newPostText}
+                    />
                 </div>
 
                 <div>

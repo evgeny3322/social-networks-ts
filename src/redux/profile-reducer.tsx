@@ -33,19 +33,15 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
 
     switch(action.type) {
         case 'ADD-POST':
-            let newPost = {id: new Date().getTime(), message: state.newPostText, likeCount: 0};
-            state.posts.push(newPost);
-            state.newPostText = '';
-            return state;
+            return {...state, newPostText: '', posts: [{id: new Date().getTime(), message: state.newPostText, likeCount: 0},...state.posts]};
         case "UPDATE-NEW-POST-TEXT":
-            state.newPostText = action.newText;
-            return state;
+            return {...state, newPostText: action.newText};
         default:
             return state;
     }
 }
 
-export const addPostCreator = () :addPostActionType => ({type: 'ADD-POST'})
+export const addPostCreator = (): addPostActionType => ({type: 'ADD-POST'})
 
-export const updateNewPostTextCreator = (text:string) :updateNewPostTextActionType =>
+export const updateNewPostTextCreator = (text: string): updateNewPostTextActionType =>
     ({type: 'UPDATE-NEW-POST-TEXT', newText: text})
