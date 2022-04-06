@@ -1,17 +1,12 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post, {PostPropsType} from "./Post/Post";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-type MyPostsPropsType = {
-    posts: Array<PostPropsType>
-    newPostText: string
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-}
 
 
 const MyPosts = (props: MyPostsPropsType) => {
-    const postElements = props.posts.map((p, index) =>
+    const postElements = props.profilePage.posts.map((p, index) =>
         <Post key={index} id={p.id} message={p.message} likeCount={p.likeCount}/>);
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();
@@ -35,7 +30,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                 <div>
                     <textarea ref={newPostElement}
                               onChange={onPostChange}
-                              value={props.newPostText}/>
+                              value={props.profilePage.newPostText}/>
                 </div>
 
                 <div>

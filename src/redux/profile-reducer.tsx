@@ -16,7 +16,7 @@ export type ActionsTypes = addPostActionType
     | sendMessageActionType
 
 
-export type ProfileReducerState = {
+export type ProfileReducerStateType = {
     posts: Array<PostPropsType>
     newPostText: string
 }
@@ -29,7 +29,7 @@ let initialState = {
     newPostText: ''
 }
 
-export const profileReducer = (state: ProfileReducerState = initialState, action: ActionsTypes) => {
+export const profileReducer = (state: ProfileReducerStateType = initialState, action: ActionsTypes) => {
 
     switch(action.type) {
         case 'ADD-POST':
