@@ -1,13 +1,16 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post, {PostPropsType} from "./Post/Post";
-import {ActionsTypes, addPostCreator, updateNewPostTextCreator} from "../../../redux/profile-reducer";
+import {updateNewPostTextCreator} from "../../../redux/profile-reducer";
+import {MyPostsContainerPropsType} from "./MyPostsContainer";
 
 type MyPostsPropsType = {
     posts: Array<PostPropsType>
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
+
 
 const MyPosts = (props: MyPostsPropsType) => {
     const postElements = props.posts.map((p, index) =>
@@ -15,13 +18,13 @@ const MyPosts = (props: MyPostsPropsType) => {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();
 
-    const addPost = () => {
-        props.dispatch(addPostCreator())
+    const onAddPost = () => {
+        props.addPost();
     }
 
     const onPostChange = () => {
         let text = newPostElement.current!.value;
-        props.dispatch(updateNewPostTextCreator(text))
+        props.updateNewPostText(text)
     }
 
     return <div className={s.myposts}>
@@ -38,8 +41,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                 </div>
 
                 <div>
-                    {/*<button onClick={newPostElement}>*/}
-                    <button onClick={addPost}>
+                    <button onClick={onAddPost}>
                         add post
                     </button>
                 </div>

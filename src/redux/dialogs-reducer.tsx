@@ -13,7 +13,7 @@ export type sendMessageActionType = {
 }
 
 
-type DialogsReducerState = {
+export type DialogsReducerStateType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
     newMessageBody: string
@@ -33,7 +33,7 @@ let initialState = {
     ]
 }
 
-export const dialogsReducer = (state: DialogsReducerState = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: DialogsReducerStateType = initialState, action: ActionsTypes) => {
 
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':

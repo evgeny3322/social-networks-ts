@@ -16,7 +16,7 @@ export type ActionsTypes = addPostActionType
     | sendMessageActionType
 
 
-type ProfileReducerState = {
+export type ProfileReducerState = {
     posts: Array<PostPropsType>
     newPostText: string
 }
