@@ -1,5 +1,6 @@
 import {sendMessageActionType, updateNewMessageBodyActionType} from "./dialogs-reducer";
 import {PostPropsType} from "../components/Profile/MyPosts/Post/Post";
+import {followActionType, setUsersActionType, unFollowActionType} from "./users-reducer";
 
 export type addPostActionType = {
     type: 'ADD-POST'
@@ -10,10 +11,14 @@ export type updateNewPostTextActionType = {
     newText: string
 }
 
-export type ActionsTypes = addPostActionType
+export type ActionsTypes =
+    addPostActionType
     | updateNewPostTextActionType
     | updateNewMessageBodyActionType
     | sendMessageActionType
+    | followActionType
+    | unFollowActionType
+    | setUsersActionType
 
 
 export type ProfileReducerStateType = {
@@ -31,9 +36,13 @@ let initialState = {
 
 export const profileReducer = (state: ProfileReducerStateType = initialState, action: ActionsTypes) => {
 
-    switch(action.type) {
+    switch (action.type) {
         case 'ADD-POST':
-            return {...state, newPostText: '', posts: [{id: new Date().getTime(), message: state.newPostText, likeCount: 0},...state.posts]};
+            return {
+                ...state,
+                newPostText: '',
+                posts: [{id: new Date().getTime(), message: state.newPostText, likeCount: 0}, ...state.posts]
+            };
         case "UPDATE-NEW-POST-TEXT":
             return {...state, newPostText: action.newText};
         default:
