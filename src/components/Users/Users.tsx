@@ -1,21 +1,21 @@
 import React from 'react';
 import s from "./Users.module.css";
 import userPhoto from "../../assets/img/3135715.png";
-import {UsersReducerStateType, UserType} from "../../redux/users-reducer";
+import {UserType} from "../../redux/users-reducer";
 
-type PropsType = {
+type UsersPropsType = {
+    totalUsersCount: number,
+    pageSize: number,
+    currentPage: number,
+    users: Array<UserType>,
     follow: (userId: number) => void,
     unFollow: (userId: number) => void,
-    setUsers: (users: Array<UserType>) => void
-    setCurrentPage: (pageNumber: number) => void,
-    setTotalUsersCount:(totalUsersCount:number) => void,
-    usersPage: UsersReducerStateType
-    onPageChanged:(pageNumber:number) => void
+    onPageChanged: (pageNumber: number) => void
 }
 
 
-const Users = (props: PropsType) => {
-    let pagesCount = Math.ceil(props.usersPage.totalUsersCount / props.usersPage.pageSize)
+const Users = (props: UsersPropsType) => {
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize )
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -23,17 +23,17 @@ const Users = (props: PropsType) => {
     return (
         <div>
             <div>
-                {pages.map((p, i) => {
-                    return <span key={i + 1}
-                                 className={props.usersPage.currentPage === p ? s.selectedPage : ''}
-                                 onClick={(e) => {
-                                     props.onPageChanged(p)
-                                 }}
+                {pages.map((p) => {
+                    return <span
+                        className={props.currentPage === p ? s.selectedPage : ''}
+                        onClick={(e) => {
+                            props.onPageChanged(p)
+                        }}
                     > {p} </span>
                 })}
             </div>
             {
-                props.usersPage.users.map(u => <div key={u.id}>
+                props.users.map(u => <div key={u.id}>
                     <div className={s.users__item}>
                         <div className={s.users__img}>
                             <img className={s.userPhoto}
