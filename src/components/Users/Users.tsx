@@ -1,43 +1,45 @@
 import React from 'react';
-import {UsersPropsType} from "./UsersContainer";
-import s from "./Users.module.css"
+import s from "./Users.module.css";
+import userPhoto from "../../assets/img/3135715.png";
+import {UsersReducerStateType, UserType} from "../../redux/users-reducer";
 
-const Users = (props: UsersPropsType) => {
-    if (props.usersPage.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                photoUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                followed: true,
-                fullName: 'userOn',
-                status: 'Good dayOn',
-                location: {city: 'CityOn', country: 'CountryOn'}
-            },
-            {
-                id: 2,
-                photoUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                followed: true,
-                fullName: 'userTw',
-                status: 'Good dayTw',
-                location: {city: 'CityTw', country: 'CountryTw'}
-            },
-            {
-                id: 3,
-                photoUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                followed: false,
-                fullName: 'userThr',
-                status: 'Good dayThr',
-                location: {city: 'CityThr', country: 'CountryThr'}
-            },
-        ])
+type PropsType = {
+    follow: (userId: number) => void,
+    unFollow: (userId: number) => void,
+    setUsers: (users: Array<UserType>) => void
+    setCurrentPage: (pageNumber: number) => void,
+    setTotalUsersCount:(totalUsersCount:number) => void,
+    usersPage: UsersReducerStateType
+    onPageChanged:(pageNumber:number) => void
+}
+
+
+const Users = (props: PropsType) => {
+    let pagesCount = Math.ceil(props.usersPage.totalUsersCount / props.usersPage.pageSize)
+    let pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
     return (
         <div>
+            <div>
+                {pages.map((p, i) => {
+                    return <span key={i + 1}
+                                 className={props.usersPage.currentPage === p ? s.selectedPage : ''}
+                                 onClick={(e) => {
+                                     props.onPageChanged(p)
+                                 }}
+                    > {p} </span>
+                })}
+            </div>
             {
                 props.usersPage.users.map(u => <div key={u.id}>
-                    <div>
+                    <div className={s.users__item}>
                         <div className={s.users__img}>
-                            <img src={u.photoUrl} alt="photo"/>
+                            <img className={s.userPhoto}
+                                 src={u.photos.small !== null ? u.photos.small : userPhoto}
+                                 alt={'ava'}
+                            />
                         </div>
                         <div>
                             {u.followed
@@ -52,12 +54,12 @@ const Users = (props: UsersPropsType) => {
                     </div>
                     <div>
                         <div>
-                            <div>{u.fullName}</div>
+                            <div>{u.name}</div>
                             <div>{u.status}</div>
                         </div>
                         <div>
-                            <div>{u.location.country}</div>
-                            <div>{u.location.city}</div>
+                            {/*<div>{u.location.country}</div>*/}
+                            {/*<div>{u.location.city}</div>*/}
                         </div>
                     </div>
                 </div>)

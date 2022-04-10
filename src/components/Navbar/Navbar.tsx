@@ -22,6 +22,11 @@ function Navbar(props:NavBarProps) {
                 </NavLink>
             </div>
             <div className={`${s.item} ${s.active}`}>
+                <NavLink className={navData => navData.isActive ? s.activeLink : s.item} to="/users">
+                    Users
+                </NavLink>
+            </div>
+            <div className={`${s.item} ${s.active}`}>
                 <a className={s.item__link}>
                     News
                 </a>

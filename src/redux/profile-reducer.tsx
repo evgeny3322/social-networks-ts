@@ -1,6 +1,12 @@
 import {sendMessageActionType, updateNewMessageBodyActionType} from "./dialogs-reducer";
 import {PostPropsType} from "../components/Profile/MyPosts/Post/Post";
-import {followActionType, setUsersActionType, unFollowActionType} from "./users-reducer";
+import {
+    followActionType,
+    setCurrentPageActionType,
+    setTotalUsersCountActionType,
+    setUsersActionType,
+    unFollowActionType
+} from "./users-reducer";
 
 export type addPostActionType = {
     type: 'ADD-POST'
@@ -19,6 +25,8 @@ export type ActionsTypes =
     | followActionType
     | unFollowActionType
     | setUsersActionType
+    | setCurrentPageActionType
+    | setTotalUsersCountActionType
 
 
 export type ProfileReducerStateType = {
