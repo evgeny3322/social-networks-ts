@@ -2,6 +2,7 @@ import React from 'react';
 import s from "./Users.module.css";
 import userPhoto from "../../assets/img/3135715.png";
 import {UserType} from "../../redux/users-reducer";
+import {Pagination} from "@material-ui/core";
 
 type UsersPropsType = {
     totalUsersCount: number,
@@ -15,7 +16,7 @@ type UsersPropsType = {
 
 
 const Users = (props: UsersPropsType) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize )
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -24,12 +25,17 @@ const Users = (props: UsersPropsType) => {
         <div>
             <div>
                 {pages.map((p) => {
-                    return <span
-                        className={props.currentPage === p ? s.selectedPage : ''}
-                        onClick={(e) => {
-                            props.onPageChanged(p)
-                        }}
-                    > {p} </span>
+                    return
+                    // <Pagination
+                    //
+                    //     variant="outlined"
+                    //     shape="rounded"/>
+                    // <span
+                    //     className={props.currentPage === p ? s.selectedPage : ''}
+                    //     onClick={(e) => {
+                    //         props.onPageChanged(p)
+                    //     }}
+                    // > {p} </span>
                 })}
             </div>
             {
