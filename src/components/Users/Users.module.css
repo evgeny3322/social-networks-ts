@@ -1,23 +1,25 @@
 .userPhoto {
+    display: block;
     width: 50px;
     height: 50px;
 }
 
-.users__img{
+.users__img {
     border: 2px solid black;
     border-radius: 50%;
 }
 
-.users__item{
+.users__item {
     display: flex;
     align-items: center;
     padding: 10px 0px 10px 0px;
 }
 
-.selectedPage{
+.selectedPage {
     font-weight: bold;
 }
 
-.preloader{
-    text-align: center;
+.pagination {
+    display: flex;
+    justify-content: center;
 }

@@ -3,6 +3,7 @@ import s from "./Users.module.css";
 import userPhoto from "../../assets/img/3135715.png";
 import {UserType} from "../../redux/users-reducer";
 import {Pagination} from "@material-ui/core";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     totalUsersCount: number,
@@ -21,31 +22,25 @@ const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+
     return (
         <div>
-            <div>
-                {pages.map((p) => {
-                    return
-                    // <Pagination
-                    //
-                    //     variant="outlined"
-                    //     shape="rounded"/>
-                    // <span
-                    //     className={props.currentPage === p ? s.selectedPage : ''}
-                    //     onClick={(e) => {
-                    //         props.onPageChanged(p)
-                    //     }}
-                    // > {p} </span>
-                })}
+            <div className={s.pagination}>
+                <Pagination count={pages.length}
+                            page={props.currentPage}
+                            onChange={(e, num) => props.onPageChanged(num)}
+                />
             </div>
             {
                 props.users.map(u => <div key={u.id}>
                     <div className={s.users__item}>
                         <div className={s.users__img}>
-                            <img className={s.userPhoto}
-                                 src={u.photos.small !== null ? u.photos.small : userPhoto}
-                                 alt={'ava'}
-                            />
+                            <NavLink to={'/profile/' + u.id}>
+                                <img className={s.userPhoto}
+                                     src={u.photos.small !== null ? u.photos.small : userPhoto}
+                                     alt={'ava'}
+                                />
+                            </NavLink>
                         </div>
                         <div>
                             {u.followed

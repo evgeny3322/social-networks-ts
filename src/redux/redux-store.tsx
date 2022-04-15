@@ -7,10 +7,9 @@ import {usersReducer} from "./users-reducer";
 export const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    usersPage: usersReducer
     // sidebar: sidebarReducer,
+    usersPage: usersReducer
 });
-
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
