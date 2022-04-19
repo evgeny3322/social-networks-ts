@@ -19,12 +19,18 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
     return (
         <div className={s.profileinfo}>
 
-            <div className={s.profileinfo__photo}>
-                <img src={PhotoUser} alt="#"/>
-            </div>
+            {/*<div className={s.profileinfo__photo}>*/}
+            {/*    <img src={PhotoUser} alt="#"/>*/}
+            {/*</div>*/}
 
             <div>
-                <img src={props.profile.photos.large !== null ? props.profile.photos.large : PhotoUser} alt='#'/>
+                <div className={s.profileinfo__photo}>
+                    <img className={s.profileinfo__img}
+                         src={props.profile.photos.large !== null
+                             ? props.profile.photos.large
+                             : PhotoUser}
+                         alt='#'/>
+                </div>
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
