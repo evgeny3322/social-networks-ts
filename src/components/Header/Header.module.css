@@ -2,6 +2,8 @@
     background-color: #d0d3d2;
     grid-area: header;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .header__img{

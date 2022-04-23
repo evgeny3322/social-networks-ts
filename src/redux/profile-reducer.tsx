@@ -4,7 +4,7 @@ import {
     followActionType,
     setCurrentPageActionType,
     setTotalUsersCountActionType,
-    setUsersActionType, toggleIsFetchingActionType,
+    setUsersActionType, toggleFollowingInProgressActionType, toggleIsFetchingActionType,
     unFollowActionType
 } from "./users-reducer";
 import {UserProfileType} from "../components/Profile/ProfileContainer";
@@ -34,6 +34,7 @@ export type ActionsTypes =
     | setTotalUsersCountActionType
     | toggleIsFetchingActionType
     | setUserProfileActionType
+    | toggleFollowingInProgressActionType
 
 
 export type ProfileReducerStateType = {
