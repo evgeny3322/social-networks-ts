@@ -4,16 +4,11 @@ import {connect} from "react-redux";
 import {
     follow,
     setCurrentPage,
-    setUsers,
-    setTotalUsersCount,
-    toggleIsFetching,
     unFollow,
-    UserType, toggleFollowingInProgress
+    UserType, toggleFollowingInProgress, getUsersThunkCreator
 } from "../../redux/users-reducer";
-import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import {getUsers, UsersDataResponseType} from "../../api/api";
 
 type MapStateToPropsType = {
     users: Array<UserType>,
@@ -27,11 +22,8 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     follow: (userId: number) => void,
     unFollow: (userId: number) => void,
-    setUsers: (users: Array<UserType>) => void,
     setCurrentPage: (currentPage: number) => void,
-    setTotalUsersCount: (totalUsersCount: number) => void,
-    toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowingInProgress: (followingInProgress: boolean, userId: number) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 }
 
 export type UsersContainerComponentPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -40,23 +32,11 @@ export type UsersContainerComponentPropsType = MapStateToPropsType & MapDispatch
 export class UsersContainerComponent extends React.Component<UsersContainerComponentPropsType> {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true);
-        getUsers(this.props.currentPage, this.props.pageSize)
-            .then((data: UsersDataResponseType) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount);
-            });
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true);
-        getUsers(pageNumber, this.props.pageSize)
-            .then((data: UsersDataResponseType) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-            });
+        this.props.getUsersThunkCreator(pageNumber, this.props.pageSize);
     }
 
     render() {
@@ -72,7 +52,7 @@ export class UsersContainerComponent extends React.Component<UsersContainerCompo
                        unFollow={this.props.unFollow}
                        onPageChanged={this.onPageChanged}
                        followingInProgress={this.props.followingInProgress}
-                       toggleFollowingInProgress={this.props.toggleFollowingInProgress}/>
+                />
             </>
         );
     }
@@ -95,9 +75,8 @@ export const UsersContainer = connect(mapStateToProps,
     {
         follow,
         unFollow,
-        setUsers,
         setCurrentPage,
-        setTotalUsersCount,
-        toggleIsFetching,
-        toggleFollowingInProgress
+        toggleFollowingInProgress,
+        getUsersThunkCreator
     })(UsersContainerComponent);
+
