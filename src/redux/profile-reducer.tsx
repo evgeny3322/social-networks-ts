@@ -1,13 +1,8 @@
 import {sendMessageActionType, updateNewMessageBodyActionType} from "./dialogs-reducer";
 import {PostPropsType} from "../components/Profile/MyPosts/Post/Post";
-import {
-    followActionType,
-    setCurrentPageActionType,
-    setTotalUsersCountActionType,
-    setUsersActionType, toggleFollowingInProgressActionType, toggleIsFetchingActionType,
-    unFollowActionType
-} from "./users-reducer";
 import {UserProfileType} from "../components/Profile/ProfileContainer";
+import {ProfileDataResponseType, usersAPI} from "../api/api";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 export type addPostActionType = {
     type: 'ADD-POST'
@@ -22,19 +17,11 @@ export type setUserProfileActionType = {
     profile: UserProfileType
 }
 
-export type ActionsTypes =
-    addPostActionType
+export type ActionsTypes = addPostActionType
     | updateNewPostTextActionType
     | updateNewMessageBodyActionType
     | sendMessageActionType
-    | followActionType
-    | unFollowActionType
-    | setUsersActionType
-    | setCurrentPageActionType
-    | setTotalUsersCountActionType
-    | toggleIsFetchingActionType
     | setUserProfileActionType
-    | toggleFollowingInProgressActionType
 
 
 export type ProfileReducerStateType = {
@@ -100,3 +87,18 @@ export const updateNewPostTextCreator = (text: string): updateNewPostTextActionT
 
 export const setUserProfile = (profile: UserProfileType): setUserProfileActionType =>
     ({type: 'SET-USER-PROFILE', profile: profile})
+
+
+//ThunkCreator
+
+export type DispatchProfileType = ThunkDispatch<ProfileReducerStateType, unknown, ActionsTypes>;
+export type ThunkProfileType = ThunkAction<void, ProfileReducerStateType, unknown, ActionsTypes>
+
+export const getUserProfile = (userId: number | undefined): ThunkProfileType => {
+    return (dispatch: DispatchProfileType ) => {
+        usersAPI.getProfile(userId)
+            .then((data: ProfileDataResponseType) => {
+                dispatch(setUserProfile(data));
+            });
+    }
+}

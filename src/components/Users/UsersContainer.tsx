@@ -2,13 +2,15 @@ import React from "react";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {
-    follow,
+    followUsers,
     setCurrentPage,
-    unFollow,
+    unFollowUsers,
     UserType, toggleFollowingInProgress, getUsersThunkCreator
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 type MapStateToPropsType = {
     users: Array<UserType>,
@@ -20,8 +22,8 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    follow: (userId: number) => void,
-    unFollow: (userId: number) => void,
+    followUsers: (userId: number) => void,
+    unFollowUsers: (userId: number) => void,
     setCurrentPage: (currentPage: number) => void,
     getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 }
@@ -48,8 +50,8 @@ export class UsersContainerComponent extends React.Component<UsersContainerCompo
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}
                        users={this.props.users}
-                       follow={this.props.follow}
-                       unFollow={this.props.unFollow}
+                       followUsers={this.props.followUsers}
+                       unFollowUsers={this.props.unFollowUsers}
                        onPageChanged={this.onPageChanged}
                        followingInProgress={this.props.followingInProgress}
                 />
@@ -71,12 +73,5 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 
 
-export const UsersContainer = connect(mapStateToProps,
-    {
-        follow,
-        unFollow,
-        setCurrentPage,
-        toggleFollowingInProgress,
-        getUsersThunkCreator
-    })(UsersContainerComponent);
-
+export const UsersContainer = compose<React.ComponentType>(connect(mapStateToProps,
+    {followUsers, unFollowUsers, setCurrentPage, toggleFollowingInProgress, getUsersThunkCreator}), WithAuthRedirect)(UsersContainerComponent);

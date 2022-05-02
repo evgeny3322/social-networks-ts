@@ -59,11 +59,11 @@ export type UsersActionsTypes = followActionType
     | toggleFollowingInProgressActionType
 
 export type UsersReducerStateType = {
-    users: Array<UserType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
+    users: Array<UserType>,
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number,
+    isFetching: boolean,
     followingInProgress: Array<number>
 }
 
@@ -76,21 +76,20 @@ let initialState: UsersReducerStateType = {
     followingInProgress: []
 };
 
-export const usersReducer = (state: UsersReducerStateType = initialState, action: ActionsTypes): UsersReducerStateType => {
-
+export const usersReducer = (state: UsersReducerStateType = initialState, action: UsersActionsTypes): UsersReducerStateType => {
     switch (action.type) {
         case 'FOLLOW':
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)};
         case 'UNFOLLOW':
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)};
         case 'SET_USERS':
-            return {...state, users: [...action.users]};
+            return {...state, users: action.users};
         case 'SET_CURRENT_PAGE':
             return {...state, currentPage: action.currentPage};
         case 'SET_TOTAL_USERS_COUNT':
             return {...state, totalUsersCount: action.totalUsersCount};
         case 'TOGGLE_IS_FETCHING':
-            return {...state, isFetching: action.isFetching}
+            return {...state, isFetching: action.isFetching};
         case 'TOGGLE_IS_FOLLOWING_PROGRESS':
             return {
                 ...state, followingInProgress: action.followingInProgress

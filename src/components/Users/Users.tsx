@@ -10,8 +10,8 @@ type UsersPropsType = {
     pageSize: number
     currentPage: number
     users: Array<UserType>,
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
+    followUsers: (userId: number) => void
+    unFollowUsers: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
     followingInProgress: Array<number>
 }
@@ -48,12 +48,12 @@ const Users = (props: UsersPropsType) => {
                                 ? <button
                                     disabled={props.followingInProgress.some(id => id === u.id)}
                                     onClick={() => {
-                                        props.unFollow(u.id)
+                                        props.unFollowUsers(u.id)
                                     }}
                                 >Unfollow</button>
                                 : <button
                                     onClick={() => {
-                                        props.follow(u.id)
+                                        props.followUsers(u.id)
                                     }}>
                                     Follow</button>
                             }

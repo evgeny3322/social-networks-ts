@@ -1,25 +1,26 @@
 import React, {JSXElementConstructor} from "react";
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
+import {getUserProfile} from "../../redux/profile-reducer";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 export type UserProfileType = {
-    aboutMe: string,
+    aboutMe: string | null,
     contacts: {
-        facebook: string,
+        facebook: string | null,
         website: string | null,
-        vk: string,
-        twitter: string,
-        instagram: string,
+        vk: string | null,
+        twitter: string | null,
+        instagram: string | null,
         youtube: string | null,
-        github: string,
+        github: string | null,
         mainLink: string | null
     }
     lookingForAJob: boolean,
-    lookingForAJobDescription: string,
+    lookingForAJobDescription: string | null,
     fullName: string,
     userId: number,
     photos: {
@@ -32,22 +33,22 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    setUserProfile: (profile: UserProfileType) => void
+    getUserProfile: (userId: number | undefined) => void
 }
 
 export type ProfileContainerComponentPropsType = MapStateToPropsType & MapDispatchToPropsType;
+
 
 export class ProfileContainerComponent extends React.Component<ProfileContainerComponentPropsType> {
 
     componentDidMount() {
 
-        //@ts-ignore
-        let userId = this.props.router.params.userId;
-
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });
+        // @ts-ignore
+        let userId = Number(this.props.router.params.userId);
+        if (!userId && this.props.profile) {
+            userId = this.props.profile.userId;
+        }
+        this.props.getUserProfile(userId)
     }
 
     render() {
@@ -57,6 +58,7 @@ export class ProfileContainerComponent extends React.Component<ProfileContainerC
         );
     }
 }
+
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
@@ -80,4 +82,4 @@ export const WithRouter = (Component: JSXElementConstructor<any>): JSXElementCon
     return WithRouterPropComponent;
 }
 
-export const ProfileContainer = connect(mapStateToProps, {setUserProfile})(WithRouter(ProfileContainerComponent))
+export const ProfileContainer = compose<React.ComponentType>(connect(mapStateToProps, {getUserProfile}), WithAuthRedirect, WithRouter)(ProfileContainerComponent);
