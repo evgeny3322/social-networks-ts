@@ -1,9 +1,3 @@
-import {MessageType} from "../components/Dialogs/Message/Message";
-import {DialogItemType} from "../components/Dialogs/DialogItem/DialogItem";
-import {ActionsTypes, profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
-import sidebarReducer from "./sidebar-reducer";
-import {PostPropsType} from "../components/Profile/MyPosts/Post/Post";
 import React from "react";
 export const store = () => {
     return (

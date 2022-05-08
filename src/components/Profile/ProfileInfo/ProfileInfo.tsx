@@ -3,9 +3,12 @@ import s from "./ProfileInfo.module.css";
 import {UserProfileType} from "../ProfileContainer";
 import Preloader from "../../common/Preloader/Preloader";
 import PhotoUser from "../../../assets/img/3135715.png"
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType | null
+    status: string
+    updateUserStatus: (status: string) => void
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -18,11 +21,6 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     return (
         <div className={s.profileinfo}>
-
-            {/*<div className={s.profileinfo__photo}>*/}
-            {/*    <img src={PhotoUser} alt="#"/>*/}
-            {/*</div>*/}
-
             <div>
                 <div className={s.profileinfo__photo}>
                     <img className={s.profileinfo__img}
@@ -31,6 +29,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                              : PhotoUser}
                          alt='#'/>
                 </div>
+                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>

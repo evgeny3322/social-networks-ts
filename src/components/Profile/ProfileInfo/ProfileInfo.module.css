@@ -5,6 +5,21 @@
     border-radius: 50%;
 }
 
+.profileStatus {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+}
 
+.status {
+    font-weight: bold;
+    font-size: large;
+}
+
+.statusText {
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 

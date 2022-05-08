@@ -1,4 +1,3 @@
-import {ActionsTypes} from "./profile-reducer";
 import {usersAPI, UsersDataResponseType} from "../api/api";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
