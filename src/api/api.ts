@@ -99,4 +99,17 @@ export const authAPI = {
                 return response.data;
             });
     },
+    logIn(email: string, password: string, rememberMe: boolean) {
+        return instance.post('auth/login', {email, password, rememberMe})
+            .then((response) => {
+                return response;
+            })
+    },
+    logOut() {
+        return instance.delete('auth/login')
+            .then((response: AxiosResponse<LogOutResponseType>) => {
+                debugger
+                return response;
+            })
+    }
 }

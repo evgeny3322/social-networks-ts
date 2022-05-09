@@ -146,7 +146,7 @@ export const getUserStatus = (userId: number | undefined): ThunkProfileType => {
                 if (response.data) {
                     dispatch(setStatus(response.data));
                 } else {
-                    dispatch(setStatus('Null'));
+                    dispatch(setStatus('Set status'));
                     dispatch(toggleIsFetching(false));
                 }
             });
@@ -157,7 +157,7 @@ export const updateUserStatus = (status: string): ThunkProfileType => {
     return (dispatch: DispatchProfileType) => {
         profileAPI.updateStatus(status)
             .then((response) => {
-                if (response.data.resultCode == 0) {
+                if (response.data.resultCode === 0) {
                     dispatch(setStatus(status));
                 }
             });

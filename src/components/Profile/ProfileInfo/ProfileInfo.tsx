@@ -29,7 +29,10 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                              : PhotoUser}
                          alt='#'/>
                 </div>
-                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
+                <ProfileStatus
+                    status={props.status}
+                    updateUserStatus={props.updateUserStatus}
+                />
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
