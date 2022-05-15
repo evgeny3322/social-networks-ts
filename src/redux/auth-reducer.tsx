@@ -1,5 +1,6 @@
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {authAPI, AuthResponseType} from "../api/api";
+import {ThunkType} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 export type AuthReducerStateType = {
     id: number | null,
@@ -17,9 +18,9 @@ const initialState: AuthReducerStateType = {
 
 type setAuthUserDataAT = ReturnType<typeof setAuthUserData>;
 
-type AuthActionsType = setAuthUserDataAT;
+export type AuthReducerActionsType = setAuthUserDataAT;
 
-export const authReducer = (state: AuthReducerStateType = initialState, action: AuthActionsType): AuthReducerStateType => {
+export const authReducer = (state: AuthReducerStateType = initialState, action: AuthReducerActionsType): AuthReducerStateType => {
     switch (action.type) {
         case 'SET-AUTH-USER-DATA':
             return {...state, ...action.data, isAuth: true};
@@ -34,33 +35,33 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
 
 //ThunkCreator
 
-export type DispatchAuthType = ThunkDispatch<AuthReducerStateType, unknown, AuthActionsType>;
-export type ThunkAuthType = ThunkAction<void, AuthReducerStateType, unknown, AuthActionsType>;
-
-export const getAuthUserData = (): ThunkAuthType => {
-    return (dispatch: DispatchAuthType) => {
-        authAPI.getAuth()
-            .then((data: AuthResponseType) => {
-                if (data.resultCode === 0) {
-                    let {id, email, login} = data.data;
-                    dispatch(setAuthUserData(id, email, login));
-                }
-            });
-    }
+export const getAuthUserData = (): ThunkType => (dispatch) => {
+    return authAPI.getAuth()
+        .then((data: AuthResponseType) => {
+            if (data.resultCode === 0) {
+                let {id, email, login} = data.data;
+                dispatch(setAuthUserData(id, email, login));
+            }
+        });
 }
 
-export const makeLogIn = (email: string, password: string, rememberMe: boolean): ThunkAuthType => {
-    return (dispatch: DispatchAuthType) => {
+export const makeLogIn = (email: string, password: string, rememberMe: boolean): ThunkType => {
+    return (dispatch) => {
         authAPI.logIn(email, password, rememberMe)
             .then((response) => {
-                console.log(response);
-                window.location.reload();
+                if (response.data.resultCode === 0) {
+                    console.log(response);
+                    window.location.reload();
+                } else {
+                    let errorMessage = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
+                    dispatch(stopSubmit('login', {_error: errorMessage}));
+                }
             })
     }
 }
 
-export const makeLogOut = (): ThunkAuthType => {
-    return (dispatch: DispatchAuthType) => {
+export const makeLogOut = (): ThunkType => {
+    return (dispatch) => {
         authAPI.logOut()
             .then((response) => {
                 console.log(response);

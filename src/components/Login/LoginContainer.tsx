@@ -1,6 +1,6 @@
 import React from "react";
 import {LoginPage} from "./Login";
-import {AppStateType} from "../../redux/redux-store";
+import {AppRootStateType} from "../../redux/redux-store";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {AuthReducerStateType, makeLogIn, makeLogOut} from "../../redux/auth-reducer";
@@ -22,7 +22,7 @@ class LoginContainerComponent extends React.Component<LoginContainerComponentPro
     }
 }
 
-let mapStateToProps = (state: AppStateType) => ({
+let mapStateToProps = (state: AppRootStateType) => ({
     isAuth: state.auth.isAuth,
     email: state.auth.email,
     id: state.auth.id,

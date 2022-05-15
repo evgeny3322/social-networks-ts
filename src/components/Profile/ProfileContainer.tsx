@@ -2,7 +2,7 @@ import React, {JSXElementConstructor} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {AppStateType} from "../../redux/redux-store";
+import {AppRootStateType} from "../../redux/redux-store";
 import {compose} from "redux";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import Preloader from "../common/Preloader/Preloader";
@@ -75,7 +75,7 @@ export class ProfileContainerComponent extends React.Component<ProfileContainerC
 }
 
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,

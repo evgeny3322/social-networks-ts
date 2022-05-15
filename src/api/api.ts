@@ -1,6 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import { UserType } from "../redux/users-reducer";
-
+import {UserType} from "../redux/users-reducer";
 
 export type UsersDataResponseType = {
     error: boolean | null,
@@ -30,6 +29,16 @@ export type ProfileDataResponseType = {
     userId: number
 }
 
+export type AuthResponseType = {
+    resultCode: number,
+    messages: Array<string>,
+    data: {
+        id: number,
+        email: string,
+        login: string
+    }
+}
+
 export type UpdateStatusResponseType = {
     resultCode: number,
     messages: Array<string>,
@@ -41,17 +50,6 @@ export type LogOutResponseType = {
     messages: []
     data: {}
 }
-
-export type AuthResponseType = {
-    resultCode: number,
-    messages: Array<string>,
-    data: {
-        id: number,
-        email: string,
-        login: string
-    }
-}
-
 export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -108,8 +106,9 @@ export const authAPI = {
     logOut() {
         return instance.delete('auth/login')
             .then((response: AxiosResponse<LogOutResponseType>) => {
-                debugger
                 return response;
             })
     }
 }
+
+

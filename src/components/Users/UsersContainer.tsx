@@ -1,11 +1,11 @@
 import React from "react";
-import {AppStateType} from "../../redux/redux-store";
+import {AppRootStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {
     followUsers,
     setCurrentPage,
     unFollowUsers,
-    UserType, toggleFollowingInProgress, getUsersThunkCreator
+    UserType, toggleFollowingInProgress, getUsersThunk,
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
@@ -61,7 +61,7 @@ export class UsersContainerComponent extends React.Component<UsersContainerCompo
 }
 
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -73,7 +73,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 
 
+
 export const UsersContainer = compose<React.ComponentType>(connect(mapStateToProps,
-    {followUsers, unFollowUsers, setCurrentPage, toggleFollowingInProgress, getUsersThunkCreator}), WithAuthRedirect)(UsersContainerComponent);
+    {followUsers, unFollowUsers, setCurrentPage, toggleFollowingInProgress, getUsersThunk}), WithAuthRedirect)(UsersContainerComponent);
 
 

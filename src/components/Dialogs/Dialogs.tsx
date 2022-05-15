@@ -3,7 +3,36 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../utils/validators/validator";
+import {Textarea} from "../common/Forms/Forms";
 
+type FormDataType = {
+    newMessage: string
+}
+
+const maxLength50 = maxLengthCreator(50);
+
+const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <div>
+                    <Field
+                        component={Textarea}
+                        name={'newMessage'}
+                        validate={[required, maxLength50]}
+                        placeholder={'Enter your message'}/>
+                </div>
+                <div>
+                    <button>Send</button>
+                </div>
+            </div>
+        </form>
+    );
+}
+
+const AddMessageFormRedux = reduxForm<FormDataType>({form: "dialogAddMessageForm"})(AddMessageForm);
 
 const Dialogs = (props: DialogsPropsType) => {
 
@@ -23,44 +52,21 @@ const Dialogs = (props: DialogsPropsType) => {
         />
     );
 
-    const newMessageBody = props.dialogsPage.newMessageBody;
-
-    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value
-        props.updateNewMessageBody(body);
+    const addNewMessage = (formData: FormDataType) => {
+        console.log(formData)
+        props.sendMessage(formData.newMessage);
     }
-
-    const onSendMessageClick = () => {
-        props.sendMessage();
-    }
-
     return (
         <div className={s.dialogs}>
-            <div className={s.dialogs__items}>
+            <div className={s.dialogs_items}>
                 {dialogsElements}
             </div>
-
             <div className={s.messages}>
-                {messagesElements}
-            </div>
-
-            <div className={s.messageAdd}>
-                <div className={s.messageAdd__area}>
-                    <textarea
-                        onChange={onNewMessageChange}
-                        value={newMessageBody}
-                        placeholder={'Enter your message'}>
-                    </textarea>
+                <div>
+                    {messagesElements}
                 </div>
-
-                <div className={s.messageAdd__button}>
-                    <button onClick={onSendMessageClick}>
-                        add messages
-                    </button>
-                </div>
-
+                <AddMessageFormRedux onSubmit={addNewMessage}/>
             </div>
-
         </div>
     );
 };
