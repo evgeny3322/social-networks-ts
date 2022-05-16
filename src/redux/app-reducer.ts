@@ -4,6 +4,7 @@ import {getAuthUserData} from "./auth-reducer";
 const initialState = {
     initialized: false
 }
+
 export type InitialAppReducerStateType = typeof initialState;
 
 type setInitializedAT = ReturnType<typeof initializedSuccessAC>;
@@ -24,7 +25,7 @@ export const initializedSuccessAC = () => ({type: "INITIALIZED-SUCCESS"});
 
 export const initializeApp = (): ThunkType => (dispatch) => {
     let promise = dispatch(getAuthUserData());
-    promise.then(() => {
+     promise.then(() => {
         dispatch(initializedSuccessAC());
     })
 }
