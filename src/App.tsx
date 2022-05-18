@@ -36,10 +36,10 @@ class App extends React.Component<AppPropsType> {
         }
 
         return (
-            <div className={s.app_wrapper}>
+            <div className={s.app}>
                 <HeaderContainer/>
                 <Navbar/>
-                <div className={s.app_wrapper_content}>
+                <div>
                     <Routes>
                         <Route path={'/dialogs/*'}
                                element={<DialogsContainer/>}
