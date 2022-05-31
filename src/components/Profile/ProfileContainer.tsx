@@ -35,6 +35,8 @@ type MapStateToPropsType = {
     profile: UserProfileType | null
     status: string
     isFetching: boolean
+    authorizedUserId: number | null
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -79,7 +81,9 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        isFetching: state.profilePage.isFetching
+        isFetching: state.profilePage.isFetching,
+        authorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth
     }
 }
 

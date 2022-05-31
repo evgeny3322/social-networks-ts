@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import Header from "./Header";
-import {AppRootStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {AuthReducerStateType, getAuthUserData, makeLogOut, setAuthUserData} from "../../redux/auth-reducer";
+import {AppRootStateType} from "../../redux/redux-store";
 
 type HeaderContainerComponentPropsType = AuthReducerStateType & {
     getAuthUserData: () => void
@@ -12,11 +12,6 @@ type HeaderContainerComponentPropsType = AuthReducerStateType & {
 
 
 export class HeaderContainerComponent extends React.Component<HeaderContainerComponentPropsType> {
-
-    componentDidMount() {
-
-        this.props.getAuthUserData();
-    }
 
     render () {
         return (

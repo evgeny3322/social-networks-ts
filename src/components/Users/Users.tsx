@@ -2,8 +2,8 @@ import React from 'react';
 import s from "./Users.module.css";
 import userPhoto from "../../assets/img/3135715.png";
 import {UserType} from "../../redux/users-reducer";
-import {Pagination} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
+import {Pagination} from "@mui/material";
 
 type UsersPropsType = {
     totalUsersCount: number

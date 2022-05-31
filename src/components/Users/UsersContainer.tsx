@@ -12,7 +12,9 @@ import Preloader from "../common/Preloader/Preloader";
 import {compose} from "redux";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {
-    getCurrentPageSelector, getFollowingInProgressSelector, getIsFetchingSelector,
+    getCurrentPageSelector,
+    getFollowingInProgressSelector,
+    getIsFetchingSelector,
     getPageSizeSelector,
     getTotalUsersCountSelector,
     getUsersSelector
@@ -84,6 +86,12 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 
 
 export const UsersContainer = compose<React.ComponentType>(connect(mapStateToProps,
-    {followUsers, unFollowUsers, setCurrentPage, toggleFollowingInProgress, getUsersThunk}), WithAuthRedirect)(UsersContainerComponent);
+    {
+        followUsers,
+        unFollowUsers,
+        setCurrentPage,
+        toggleFollowingInProgress,
+        getUsersThunk
+    }), WithAuthRedirect)(UsersContainerComponent);
 
 
