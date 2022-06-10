@@ -2,6 +2,7 @@ html,
 body {
     height: 100%;
     background-color: #e5f2f98f;
+    font-family: cursive;
 }
 
 body {
@@ -78,7 +79,18 @@ a {
     grid-gap: 10px;
 }
 
+button {
+    margin-left: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+    transition: all .2s;
+    cursor: pointer;
+}
 
+button:hover {
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+}
 
 
 

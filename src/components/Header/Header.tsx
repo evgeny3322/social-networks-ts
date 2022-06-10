@@ -19,12 +19,14 @@ const Header = (props: HeaderPropsType) => {
                     {props.isAuth
                         ? <div>
                             <span>{props.login}</span>
-                            <button style={{marginLeft: "10px"}}
+                            <button className={s.buttonLogin}
                                     onClick={props.makeLogOut}
-                            >LogOut
+                            >Sign Out
                             </button>
                         </div>
-                        : <NavLink to='/login'>Login</NavLink>
+                        : <NavLink to='/login'>
+                            <h1 className={s.loginText}>Login</h1>
+                        </NavLink>
                     }
                 </div>
             </div>

@@ -1,0 +1,12 @@
+.postsBlock{
+    margin-top: 6px;
+    width: 100%;
+    height: 100%;
+    display: table;
+    text-align: center;
+}
+
+textarea{
+    width: 500px;
+    height: 150px;
+}

@@ -33,14 +33,18 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                     status={props.status}
                     updateUserStatus={props.updateUserStatus}
                 />
-                <div>{props.profile.fullName}</div>
+                <div className={s.infoProfile}>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
-                <div>My contacts</div>
-                <div>github: {props.profile.contacts.github}</div>
-                <div>instagram: {props.profile.contacts.instagram}</div>
-                <div>youtube: {props.profile.contacts.youtube}</div>
-                <div>vk: {props.profile.contacts.vk}</div>
+                <h3 className={s.contacts}>My contacts</h3>
+
+                <div className={s.infoProfile}>
+                    <div>github: {props.profile.contacts.github}</div>
+                    <div>instagram: {props.profile.contacts.instagram}</div>
+                    <div>youtube: {props.profile.contacts.youtube}</div>
+                    <div>vk: {props.profile.contacts.vk}</div>
+                </div>
+
             </div>
         </div>
     );

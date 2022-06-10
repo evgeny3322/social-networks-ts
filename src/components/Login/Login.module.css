@@ -1,0 +1,20 @@
+.formBlock{
+    margin-top: 6px;
+    width: 100%;
+    height: 100%;
+    display: table;
+    text-align: center;
+}
+
+.loginButton{
+    border-radius: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.LoginBlock,
+.LoginPass
+{
+    margin-bottom: 20px;
+}

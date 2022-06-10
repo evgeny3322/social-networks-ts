@@ -7,9 +7,32 @@
     align-items: center;
 }
 
-.header__img{
+.header__img {
     width: 100px;
     height: 50px;
     margin-left: 25px;
     margin-top: 5px;
+}
+
+.loginBlock {
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.loginText {
+    font-size: 20px;
+    color: black;
+}
+
+.buttonLogin {
+    margin-left: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+    transition: all .2s;
+    cursor: pointer;
+}
+
+.buttonLogin:hover {
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
 }

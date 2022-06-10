@@ -15,17 +15,17 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div className={s.formBlock}>
-                <div>
+                <div className={s.LoginBlock}>
                     <Field placeholder={"Login"} name={"login"} component={"input"}/>
                 </div>
-                <div>
+                <div className={s.LoginPass}>
                     <Field placeholder={"Password"} name={"password"} component={"input"}/>
                 </div>
                 <div>
                     <Field type={"checkbox"} name={"rememberMe"} component={"input"}/>Remember me
                 </div>
                 <div>
-                    <button>
+                    <button className={s.loginButton}>
                         Login
                     </button>
                 </div>
@@ -56,7 +56,6 @@ export const LoginPage = (props: LoginPagePropsType) => {
 
     return (
         <div className={s.loginPage}>
-            <h1>LOGIN</h1>
             <LoginReduxForm onSubmit={onSubmit}/>
         </div>
     );

@@ -1,6 +1,6 @@
 .preloader{
-    /*position: absolute ;*/
-    /*top: 35%;*/
-    /*left: 50%;*/
-    transform: translateX(0%) translateY(175%);
+    position: absolute ;
+    top: 35%;
+    left: 50%;
+    /*transform: translateX(0%) translateY(175%);*/
 }
