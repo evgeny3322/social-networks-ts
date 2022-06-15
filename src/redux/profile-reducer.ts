@@ -2,7 +2,7 @@ import {sendMessageActionType, updateNewMessageBodyActionType} from "./dialogs-r
 import {PostPropsType} from "../components/Profile/MyPosts/Post/Post";
 import {UserProfileType} from "../components/Profile/ProfileContainer";
 import {profileAPI, ProfileDataResponseType} from "../api/api";
-import {ThunkType} from "./redux-store";
+import {DispatchType, ThunkType} from "./redux-store";
 
 
 export type addPostActionType = {
@@ -29,6 +29,11 @@ export type toggleIsFetchingActionType = {
     isFetching: boolean
 }
 
+export type deletePostActionType = {
+    type: "DELETE-POST"
+    postId: number
+};
+
 export type DialogsProfileReducersActionsTypes = addPostActionType
     | updateNewPostTextActionType
     | updateNewMessageBodyActionType
@@ -36,7 +41,7 @@ export type DialogsProfileReducersActionsTypes = addPostActionType
     | setUserProfileActionType
     | setStatusActionType
     | toggleIsFetchingActionType
-
+    | deletePostActionType
 
 
 export type ProfileReducerStateType = {
@@ -79,7 +84,7 @@ let initialState: ProfileReducerStateType = {
 export const profileReducer = (state: ProfileReducerStateType = initialState, action: DialogsProfileReducersActionsTypes): ProfileReducerStateType => {
 
     switch (action.type) {
-        case 'ADD-POST':
+        case "ADD-POST":
             return {
                 ...state,
                 posts: [{id: new Date().getTime(), message: action.newPostText, likeCount: 0}, ...state.posts]
@@ -88,8 +93,10 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
             return {...state, profile: action.profile};
         case "SET-STATUS":
             return {...state, status: action.status};
-        case 'TOGGLE-IS-FETCHING':
+        case "TOGGLE-IS-FETCHING":
             return {...state, isFetching: action.isFetching};
+        case "DELETE-POST":
+            return {...state, posts: state.posts.filter(post => post.id !== action.postId)};
         default:
             return state;
     }
@@ -105,42 +112,33 @@ export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingActionTyp
     type: 'TOGGLE-IS-FETCHING',
     isFetching: isFetching
 });
+export const deletePost = (postId: number): deletePostActionType => ({type: "DELETE-POST", postId});
 
 //ThunkCreator
 
-export const getUserProfile = (userId: number | undefined): ThunkType => {
-    return (dispatch) => {
-        dispatch(toggleIsFetching(true));
-        profileAPI.getProfile(userId)
-            .then((data: ProfileDataResponseType) => {
-                dispatch(setUserProfile(data));
-                dispatch(toggleIsFetching(false));
-            });
+export const getUserProfile = (userId: number | undefined): ThunkType => async (dispatch: DispatchType) => {
+    dispatch(toggleIsFetching(true));
+    const response: ProfileDataResponseType = await profileAPI.getProfile(userId);
+    dispatch(setUserProfile(response));
+    dispatch(toggleIsFetching(false));
+}
+
+
+export const getUserStatus = (userId: number | undefined): ThunkType => async (dispatch: DispatchType) => {
+    dispatch(toggleIsFetching(true));
+    const response = await profileAPI.getStatus(userId);
+    if (response.data) {
+        dispatch(setStatus(response.data));
+    } else {
+        dispatch(setStatus('Status not found'));
+        dispatch(toggleIsFetching(false));
     }
 }
 
-export const getUserStatus = (userId: number | undefined): ThunkType => {
-    return (dispatch) => {
-        dispatch(toggleIsFetching(true));
-        profileAPI.getStatus(userId)
-            .then((response) => {
-                if (response.data) {
-                    dispatch(setStatus(response.data));
-                } else {
-                    dispatch(setStatus('Null'));
-                    dispatch(toggleIsFetching(false));
-                }
-            });
-    }
-}
 
-export const updateUserStatus = (status: string): ThunkType => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status)
-            .then((response) => {
-                if (response.data.resultCode == 0) {
-                    dispatch(setStatus(status));
-                }
-            });
+export const updateUserStatus = (status: string): ThunkType => async (dispatch: DispatchType) => {
+    const response = await profileAPI.updateStatus(status);
+    if (response.data.resultCode == 0) {
+        dispatch(setStatus(status));
     }
 }

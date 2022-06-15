@@ -33,9 +33,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const AddNewPostFormRedux = reduxForm<FormDataType>({form: "AddPostForm"})(AddNewPostForm);
 
-
-const MyPosts = (props: MyPostsPropsType) => {
-
+const MyPosts = React.memo(function (props: MyPostsPropsType) {
     const postElements = props.profilePage.posts.map((p, index) =>
         <Post key={index} id={p.id} message={p.message} likeCount={p.likeCount}/>);
 
@@ -45,13 +43,13 @@ const MyPosts = (props: MyPostsPropsType) => {
 
     return (
         <div className={s.postsBlock}>
-            <h3>My posts</h3>
+            <div className={s.div}>My posts</div>
             <AddNewPostFormRedux onSubmit={onAddPost}/>
             <div className={s.posts}>
                 {postElements}
             </div>
         </div>
     );
-};
+});
 
 export default MyPosts;
