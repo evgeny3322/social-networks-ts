@@ -13,8 +13,16 @@ type FormDataType = {
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div className={s.formBlock}>
+        <form className={s.formBlock} onSubmit={props.handleSubmit}>
+            <h1>
+                Test
+            </h1>
+            <div>
+                Login: free@samuraijs.com <br/>
+                Password: free
+            </div>
+            <hr/>
+            <div >
                 <div className={s.LoginBlock}>
                     <Field placeholder={"Login"} name={"login"} component={"input"}/>
                 </div>
