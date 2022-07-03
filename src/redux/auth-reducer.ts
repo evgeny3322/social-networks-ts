@@ -46,14 +46,17 @@ export const makeLogIn = (email: string, password: string, rememberMe: boolean):
     async (dispatch: DispatchType) => {
         let response = await authAPI.logIn(email, password, rememberMe);
         if (response.data.resultCode === 0) {
-            window.location.reload();
+            dispatch(getAuthUserData())
         } else {
             let errorMessage = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
             dispatch(stopSubmit('login', {_error: errorMessage}));
         }
     }
 
-export const makeLogOut = (): ThunkType => async (dispatch: DispatchType) => {
-    let response = await authAPI.logOut();
-    window.location.reload();
-}
+export const makeLogOut = (): ThunkType =>
+    async (dispatch: DispatchType) => {
+        let response = await authAPI.logOut();
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthUserData())
+        }
+    }
