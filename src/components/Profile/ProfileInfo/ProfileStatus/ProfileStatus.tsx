@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import s from './ProfileInfo.module.css';
+import s from '../ProfileInfo.module.css';
 import {TextField} from "@mui/material";
 
 type ProfileStatusPropsType = {

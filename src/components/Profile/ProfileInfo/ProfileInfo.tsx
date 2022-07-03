@@ -3,7 +3,7 @@ import s from "./ProfileInfo.module.css";
 import {UserProfileType} from "../ProfileContainer";
 import Preloader from "../../common/Preloader/Preloader";
 import PhotoUser from "../../../assets/img/3135715.png"
-import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType | null
